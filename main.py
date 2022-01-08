@@ -9,11 +9,16 @@ pygame.init()
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 
+# variables
+scoreA = 0
+scoreB = 0
+
 # window
 size = (700, 500)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Pong")
 
+# objects
 paddleA = Paddle(WHITE, 10, 100)
 paddleA.rect.x = 20
 paddleA.rect.y = 200
@@ -62,9 +67,13 @@ while run:
     # --- game
     allSprites.update()
     if ball.rect.x>=690:
+        scoreA += 1
         ball.velocity[0] = -ball.velocity[0]
+        ball.reset()
     if ball.rect.x<=0:
+        scoreB += 1
         ball.velocity[0] = -ball.velocity[0]
+        ball.reset()
     if ball.rect.y>490:
         ball.velocity[1] = -ball.velocity[1]
     if ball.rect.y<0:
@@ -86,6 +95,12 @@ while run:
     # draw all sprites
     allSprites.draw(screen)
 
+    # render score
+    font = pygame.font.Font(None, 74)
+    text = font.render(str(scoreA), 1, WHITE)
+    screen.blit(text, (250,10))
+    text = font.render(str(scoreB), 1, WHITE)
+    screen.blit(text, (420,10))
     # --- update screen
     pygame.display.flip()
      

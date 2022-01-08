@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+from time import sleep
 BLACK = (0,0,0)
 
 class Ball(pygame.sprite.Sprite):
@@ -34,3 +35,10 @@ class Ball(pygame.sprite.Sprite):
         if randint(0,1) == 1: self.velocity[1] = -self.velocity[1]
         self.rect.x += self.velocity[0]
         self.rect.y += self.velocity[1]
+
+    def reset(self):
+      self.rect.x = 345
+      self.rect.y = 195
+      sleep(1)
+      self.velocity = [randint(4,8), randint(-8,8)]
+
