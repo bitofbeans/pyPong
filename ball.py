@@ -27,6 +27,10 @@ class Ball(pygame.sprite.Sprite):
         self.rect.x += self.velocity[0]
         self.rect.y += self.velocity[1]
     
-    def bounce(self):
+    def bounce(self,paddleY):
         self.velocity[0] = -self.velocity[0]
-        self.velocity[1] = randint(-8,8)
+        self.velocity[1] = (paddleY-self.rect.y)/10
+        print(self.velocity[1])
+        if randint(0,1) == 1: self.velocity[1] = -self.velocity[1]
+        self.rect.x += self.velocity[0]
+        self.rect.y += self.velocity[1]

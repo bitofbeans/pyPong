@@ -71,8 +71,10 @@ while run:
         ball.velocity[1] = -ball.velocity[1] 
 
     # check ball collisions
-    if pygame.sprite.collide_mask(ball,paddleA) or pygame.sprite.collide_mask(ball,paddleB):
-      ball.bounce()
+    if pygame.sprite.collide_mask(ball,paddleA):
+      ball.bounce(paddleY=paddleA.rect.y+(paddleA.rect.height/2))
+    elif pygame.sprite.collide_mask(ball,paddleB):
+      ball.bounce(paddleY=paddleB.rect.y+(paddleB.rect.height/2))
 
     # --- render
     # clear screen
