@@ -12,6 +12,7 @@ WHITE = (255,255,255)
 # variables
 scoreA = 0
 scoreB = 0
+sleep = 0
 
 # window
 size = (700, 500)
@@ -51,39 +52,44 @@ while run:
     for event in pygame.event.get(): # event
         if event.type == pygame.QUIT: # event is close event
               run = False # exit loop
- 
-    # --- handle player input
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-      paddleA.moveUp(5)
-    if keys[pygame.K_s]:
-      paddleA.moveDown(5)
-    if keys[pygame.K_UP]:
-      paddleB.moveUp(5)
-    if keys[pygame.K_DOWN]:
-      paddleB.moveDown(5)
+    if sleep > 0:
+      sleep -= 0.017
+      pass
+    else:
+      # --- handle player input
+      keys = pygame.key.get_pressed()
+      if keys[pygame.K_w]:
+        paddleA.moveUp(5)
+      if keys[pygame.K_s]:
+        paddleA.moveDown(5)
+      if keys[pygame.K_UP]:
+        paddleB.moveUp(5)
+      if keys[pygame.K_DOWN]:
+        paddleB.moveDown(5)
 
 
-    # --- game
-    allSprites.update()
-    if ball.rect.x>=690:
-        scoreA += 1
-        ball.velocity[0] = -ball.velocity[0]
-        ball.reset()
-    if ball.rect.x<=0:
-        scoreB += 1
-        ball.velocity[0] = -ball.velocity[0]
-        ball.reset()
-    if ball.rect.y>490:
-        ball.velocity[1] = -ball.velocity[1]
-    if ball.rect.y<0:
-        ball.velocity[1] = -ball.velocity[1] 
+      # --- game
+      allSprites.update()
+      if ball.rect.x>=690:
+          scoreA += 1
+          ball.velocity[0] = -ball.velocity[0]
+          ball.reset()
+          sleep = 1
+      if ball.rect.x<=0:
+          scoreB += 1
+          ball.velocity[0] = -ball.velocity[0]
+          ball.reset()
+          sleep = 1
+      if ball.rect.y>490:
+          ball.velocity[1] = -ball.velocity[1]
+      if ball.rect.y<0:
+          ball.velocity[1] = -ball.velocity[1] 
 
-    # check ball collisions
-    if pygame.sprite.collide_mask(ball,paddleA):
-      ball.bounce(paddleY=paddleA.rect.y+(paddleA.rect.height/2))
-    elif pygame.sprite.collide_mask(ball,paddleB):
-      ball.bounce(paddleY=paddleB.rect.y+(paddleB.rect.height/2))
+      # check ball collisions
+      if pygame.sprite.collide_mask(ball,paddleA):
+        ball.bounce(paddleY=paddleA.rect.y+(paddleA.rect.height/2))
+      elif pygame.sprite.collide_mask(ball,paddleB):
+        ball.bounce(paddleY=paddleB.rect.y+(paddleB.rect.height/2))
 
     # --- render
     # clear screen
